@@ -1,0 +1,32 @@
+- hosts:
+  - jellyfin
+  vars:
+    ansible_user: root
+    distro: ubuntu
+    codename: jammy
+  tasks:
+  - name: change hostname
+    shell: hostnamectl set-hostname jellyfin
+
+  - name: install curl
+    apt: 
+      name: curl
+      update_cache: yes
+
+  - name: install gnupg
+    apt: 
+      name: gnupg
+      update_cache: yes
+  
+  - name: install keys
+    shell: curl -fsSL https://repo.jellyfin.org/{{distro}}/jellyfin_team.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg--batch --yes 
+  
+  - name: install sources
+    template:
+      src: jellyfin.sources
+      dest: /etc/apt/sources.list.d/jellyfin.sources
+
+  - name: install jellyfin
+    apt:
+      name: jellyfin
+      update_cache: yes
