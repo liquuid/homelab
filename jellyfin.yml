@@ -13,6 +13,53 @@
       name: curl
       update_cache: yes
 
+  - name: Create a directory music
+    ansible.builtin.file:
+      path: /music
+      state: directory
+      mode: '0755'
+
+  - name: Create a directory filmes
+    ansible.builtin.file:
+      path: /filmes
+      state: directory
+      mode: '0755'
+
+  - name: Create a directory series
+    ansible.builtin.file:
+      path: /series
+      state: directory
+      mode: '0755'
+
+  - name: Create a directory anime
+    ansible.builtin.file:
+      path: /anime
+      state: directory
+      mode: '0755'
+
+  - name: Create a directory cartoon
+    ansible.builtin.file:
+      path: /cartoon
+      state: directory
+      mode: '0755'
+
+
+  - name: generate fstab
+    shell: echo /dev/mapper/ubuntu--vg-ubuntu--lv / ext4 defaults 0 1 > /etc/fstab
+  - name: generate fstab
+    shell: echo /dev/vda2 /boot ext4 defaults 0 1 >> /etc/fstab
+    
+  - name: add music in fstab
+    shell: echo music /music virtiofs defaults 0 0  >> /etc/fstab
+  - name: add filmes in fstab
+    shell: echo filmes /filmes virtiofs defaults 0 0  >> /etc/fstab
+  - name: add series in fstab
+    shell: echo series /series virtiofs defaults 0 0  >> /etc/fstab
+  - name: add anime in fstab
+    shell: echo anime /anime virtiofs defaults 0 0  >> /etc/fstab
+  - name: add cartoon in fstab
+    shell: echo cartoon /cartoon virtiofs defaults 0 0  >> /etc/fstab
+
   - name: install gnupg
     apt: 
       name: gnupg
